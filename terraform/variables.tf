@@ -8,6 +8,7 @@ variable "subscription_id" {
 variable "resource_group_name" {
   description = "Name of the resource group"
   type        = string
+  default     = "my-rg"
 }
 
 variable "location" {
@@ -19,11 +20,13 @@ variable "location" {
 variable "kubernetes_cluster_name" {
   description = "Name of the Kubernetes Cluster"
   type        = string
+  default     = "my-aks-clust"
 }
 
 variable "dns_prefix" {
   description = "DNS prefix for the AKS cluster"
   type        = string
+  default     = "ap"
 }
 
 variable "node_pool_name" {
