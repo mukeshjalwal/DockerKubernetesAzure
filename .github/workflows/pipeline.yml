@@ -48,5 +48,6 @@ jobs:
           docker push mukeshjalwal/myapp:latest
 
       - name: Output Docker Image Version
-        run: echo "Pushed Docker Image Version: ${{ env.IMAGE_TAG }}"
+        run: |
+          echo "Pushed Docker Image Version: ${{ env.IMAGE_TAG }}"
 
