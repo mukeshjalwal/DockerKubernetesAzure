@@ -12,6 +12,7 @@ kubectl apply -f service.yaml
 ```sh
 kubectl get nodes
 kubectl cluster-info
+kubectl get svc
 ```
 
 ### Managing Pods
