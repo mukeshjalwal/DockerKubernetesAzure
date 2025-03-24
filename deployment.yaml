@@ -15,6 +15,7 @@ spec:
       containers:
         - name: myapp
           image: docker.io/mukeshjalwal/myapp:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
 
