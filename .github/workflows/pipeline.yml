@@ -18,25 +18,30 @@ jobs:
           python-version: 3.9
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; else echo "requirements.txt not found"; fi
 
       - name: Run tests
         run: | 
           echo "Unit testing pytesting: testing successful"
 
       - name: Set Image Tag
-        run: echo "IMAGE_TAG=$(date +%Y%m%d%H%M%S)-${GITHUB_SHA::7}" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=$(date -u +"%Y%m%d%H%M%S")-${GITHUB_SHA::7}" >> $GITHUB_ENV
 
       - name: Build Docker image
-        run: docker build -t myapp:${{ env.IMAGE_TAG }} -t myapp:latest .
+        run: |
+          docker build -t myapp:${{ env.IMAGE_TAG }} -t myapp:latest .
 
       - name: Security Scan (Trivy)
         run: |
           echo "security scan image myapp:latest success"
 
       - name: Push to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
           docker tag myapp:${{ env.IMAGE_TAG }} mukeshjalwal/myapp:${{ env.IMAGE_TAG }}
           docker tag myapp:latest mukeshjalwal/myapp:latest
           docker push mukeshjalwal/myapp:${{ env.IMAGE_TAG }}
@@ -44,3 +49,4 @@ jobs:
 
       - name: Output Docker Image Version
         run: echo "Pushed Docker Image Version: ${{ env.IMAGE_TAG }}"
+
