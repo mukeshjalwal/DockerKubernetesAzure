@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myapp-ingress
+  namespace: default  # Adjust if your service is in a different namespace
+spec:
+  rules:
+  - host: myapp.example.com   # Replace with your domain or subdomain
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: myapp-service
+            port:
+              number: 80  # The service port that the ingress should forward to
