@@ -33,3 +33,8 @@ kubectl delete deployment <deployment>
 az aks get-credentials --resource-group <resource-group-name> --name <aks-cluster-name> --overwrite-existing
 ```
 
+### Helm Chart
+```sh
+helm package .;helm install myapp ./myapp-<ver>.tgz;kubectl get pod
+```
+
